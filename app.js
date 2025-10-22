@@ -24,7 +24,7 @@ const ui = {
 /* 原生自动增高 */
 const tx = ui.input;
 tx.addEventListener('input', () => {
-  tx.style.height = '来源代码';
+  tx.style.height = 'auto';
   tx.style.height = tx.scrollHeight + 'px';
 });
 
@@ -133,23 +133,6 @@ function drawRadar(data){
     },
     options:{ scales:{ r:{ suggestedMin:0, suggestedMax:10 } }, plugins:{ legend:{ display:false } } }
   });
-}
-function render(r){
-  showSummary(r.summary);
-  const ts = Math.min(10, 0.5 + (r.credibility || 8));
-  const fd = Math.min(10, 1.5 + (r.facts.length || 0) * 1.8);
-  const ebRaw = (r.bias.emotional + r.bias.binary + r.bias.mind);
-  const eb = smoothNeutrality(ebRaw);
-  const cs = Math.min(10, 0.5 + (ts + fd + eb) / 3);
-  drawBars({ transparency: ts, factDensity: fd, emotion: eb, consistency: cs });
-  drawRadar([ts, fd, eb, cs]);
-  listConf(ui.fact,    r.facts);
-  listConf(ui.opinion, r.opinions);
-  bias(ui.bias,    r.bias);
-  ui.pub.textContent = r.publisher;
-  ui.pr.textContent  = r.pr;
-  ui.fourDim.classList.remove('hidden');
-  ui.results.classList.remove('hidden');
 }
 
 /* 主流程 */
