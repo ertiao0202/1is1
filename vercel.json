@@ -5,7 +5,7 @@
   "routes": [
     {
       "src": "/privacy",
-      "dest": "/public/privacy.html"
+      "dest": "/privacy.html"
     },
     {
       "src": "/(.*)",
