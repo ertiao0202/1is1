@@ -1,10 +1,15 @@
-<!doctype html> 
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FactLens – Instant Article Bias Check</title>
   <link rel="stylesheet" href="main.css" />
+  <!-- Cookie + Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
   <header class="top-bar">
@@ -100,10 +105,47 @@
         <p id="prAdvice"></p>
       </article>
     </section>
+
+    <!-- ====== 隐私政策（版本 1 新增） ====== -->
+    <section id="privacy" class="analysis-card full-row">
+      <h2>Privacy Policy</h2>
+      <p><strong>Last updated:</strong> 2025-06-25</p>
+
+      <h3>1. What we collect</h3>
+      <ul>
+        <li>The text or video links you paste (used only for analysis, not stored).</li>
+        <li>Anonymous usage data via Vercel Analytics (no personal identity).</li>
+      </ul>
+
+      <h3>2. How we use it</h3>
+      <p>Only to generate the analysis report; input is discarded immediately after processing.</p>
+
+      <h3>3. Third-party services</h3>
+      <ul>
+        <li><strong>Vercel</strong> – hosting and anonymous analytics.</li>
+        <li><strong>Moonshot AI</strong> – text analysis (no input storage).</li>
+      </ul>
+
+      <h3>4. Cookies</h3>
+      <p>Only anonymous analytics cookies; no tracking or marketing cookies.</p>
+
+      <h3>5. Your rights</h3>
+      <p>You can stop using the tool at any time; no account, no data retention.</p>
+
+      <h3>6. Changes</h3>
+      <p>We may update this policy by changing the date above; continued use constitutes acceptance.</p>
+
+      <p><a href="/">← Back to Home</a></p>
+    </section>
   </main>
 
   <footer class="footer">
-    <a href="/privacy">Privacy Policy</a> ·
+    <a href="https://www.buymeacoffee.com/你的用户名" target="_blank" rel="noopener">
+      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height:40px;width:174px;border:0;">
+    </a>
+    ·
+    <a href="#privacy">Privacy Policy</a>
+    ·
     <a href="#terms">Terms of Service</a>
   </footer>
 
