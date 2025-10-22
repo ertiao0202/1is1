@@ -1,5 +1,5 @@
-// public/app.js
-const $   = s => document.querySelector(s);
+/* public/js/app.js  (ESM 版) */
+const $ = s => document.querySelector(s);
 const url = '/api/chat';
 
 let radarChart;
@@ -28,19 +28,19 @@ tx.addEventListener('input', () => {
   tx.style.height = tx.scrollHeight + 'px';
 });
 
-/* 新增：判断 YouTube 链接 */
+/* 判断 YouTube 链接 */
 function isYoutubeUrl(str) {
   return /(youtube\.com|youtu\.be)/i.test(str);
 }
 
-/* 新增：拉 YouTube 字幕 */
+/* 拉 YouTube 字幕 */
 async function fetchYoutubeText(url) {
   const res = await fetch('/api/fetch-text', {
-    method: 'POST',
+    method : 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url })
+    body   : JSON.stringify({ url })
   });
-  if (!res.ok) return null;
+  if (!res.ok) throw new Error('subtitle fetch failed');
   const { text } = await res.json();
   return text;
 }
@@ -81,9 +81,10 @@ function showSummary(txt){
 }
 
 /* 进度条优化 */
-let pctTick; // 全局计时器句柄
+let pctTick = null;
 
 function showProgress(){
+  if (pctTick) clearInterval(pctTick);
   ui.progress.classList.remove('hidden');
   ui.fourDim.classList.add('hidden');
   ui.results.classList.add('hidden');
@@ -95,16 +96,18 @@ function showProgress(){
   let pct = 0;
   pctTick = setInterval(() => {
     pct += 2;
-    if (pct > 99) pct = 99;               // 刹车
+    if (pct > 99) pct = 99;
     $('#pct').textContent = pct;
-    $('#progressInner').style.width = Math.min(pct, 100) + '%'; // 不超100
+    $('#progressInner').style.width = Math.min(pct, 100) + '%';
   }, 120);
 }
 
 function hideProgress(){
   clearInterval(pctTick);
+  pctTick = null;
   ui.progress.classList.add('hidden');
 }
+
 function drawBars({ transparency, factDensity, emotion, consistency }){
   const max = 10;
   document.getElementById('tsVal').textContent = transparency.toFixed(1);
@@ -116,6 +119,7 @@ function drawBars({ transparency, factDensity, emotion, consistency }){
   document.getElementById('ebBar').style.width = `${(emotion / max) * 100}%`;
   document.getElementById('csBar').style.width = `${(consistency / max) * 100}%`;
 }
+
 function drawRadar(data){
   if (typeof window.Chart === 'undefined'){ console.warn('Chart.js not loaded'); return; }
   if (radarChart) radarChart.destroy();
@@ -140,11 +144,16 @@ async function handleAnalyze(){
   const raw = ui.input.value.trim();
   if (!raw){ hideProgress(); return; }
 
-  // 新增：YouTube 字幕自动获取
+  // YouTube 字幕自动获取
   if (isYoutubeUrl(raw)) {
-    const text = await fetchYoutubeText(raw);
-    if (!text) { showSummary('No subtitle found, please paste text directly.'); await new Promise(r => setTimeout(r, COOL_DOWN)); return; }
-    ui.input.value = text;
+    try {
+      const text = await fetchYoutubeText(raw);
+      ui.input.value = text;
+    } catch (e) {
+      showSummary('No subtitle found, please paste text directly.');
+      await new Promise(r => setTimeout(r, COOL_DOWN));
+      return;
+    }
   }
 
   isAnalyzing = true;
@@ -161,17 +170,15 @@ async function handleAnalyze(){
     showSummary(msg);
     await new Promise(r => setTimeout(r, COOL_DOWN));
   } finally {
-    clearInterval(pctTick);
-    $('#pct').textContent = '100';
-    $('#progressInner').style.width = '100%';
-    isAnalyzing = false;
     hideProgress();
+    isAnalyzing = false;
   }
 }
+
 async function fetchContent(raw){
   if (!raw.startsWith('http')) return { content: raw.slice(0,2000), title: 'Pasted text' };
   const controller = new AbortController();
-  const timer = setTimeout(()=>controller.abort(), 6000);
+  const timer = setTimeout(()=>controller.abort(), 10000); // 放宽到 10s
   try{
     const res = await fetch(`https://r.jina.ai/${encodeURIComponent(raw)}`, { signal: controller.signal });
     clearTimeout(timer);
@@ -180,9 +187,10 @@ async function fetchContent(raw){
     return { content: txt.slice(0, 2000), title: raw };
   }catch(e){
     clearTimeout(timer);
-    return { content: raw.slice(0,2000), title: 'Pasted text' };
+    throw e; // 让上层 catch 提示用户
   }
 }
+
 async function analyzeContent(content, title){
   const prompt = `Role: You are "FactLens", a fact-opinion-bias detector.
 Output MUST follow the structure below; otherwise the parser will break.
@@ -237,6 +245,7 @@ ${content}`;
   const json = await res.json();
   return parseReport(json.choices[0].message.content);
 }
+
 function parseReport(md){
   const r = { facts:[], opinions:[], bias:{}, summary:'', publisher:'', pr:'', credibility:8 };
   const cred = md.match(/Credibility:\s*(\d+(?:\.\d+)?)\s*\/\s*10/);
@@ -280,6 +289,7 @@ function parseReport(md){
   if (sum) r.summary = sum[1].trim();
   return r;
 }
+
 function render(r){
   showSummary(r.summary);
   const ts = Math.min(10, 0.5 + (r.credibility || 8));
