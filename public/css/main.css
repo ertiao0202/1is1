@@ -1,4 +1,4 @@
-/* ========== 版本 1 – 完整 main.css ========== */ 
+/* ========== 版本 1 – 完整 main.css ========== */
 
 /* 进度条与输入框同宽 */
 .progress{
@@ -45,7 +45,7 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .input-area{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
 .input{flex:1;padding:0.75rem 1rem;border:1px solid var(--border);font-size:1rem;resize:vertical;}
 .input--capsule{
-  width:100%;min-height:calc(1em * 1.5 + 0.6rem * 2);max-height:calc(1em * 1.5 * 5 + 0.6rem * 2);
+  width:100%;min-height:calc(1em * 1.5 * 3 + 0.6rem * 2);max-height:calc(1em * 1.5 * 5 + 0.6rem * 2);
   padding:0.6rem 1rem;border:1px solid #d1d5db;border-radius:1.25rem;background:#ffffff;resize:none;
   overflow-y:auto;line-height:1.5;font-size:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);
   transition:box-shadow .2s, height .15s ease-out;
@@ -91,3 +91,15 @@ li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;ba
 .conf-high{border-left:4px solid #16a34a;background:#f0fdf4}.conf-mid{border-left:4px solid #f59e0b;background:#fffbeb}.conf-low{border-left:4px solid #dc2626;background:#fef2f2}
 li.conf-high::before,li.conf-mid::before,li.conf-low::before{display:none}
 .hidden{display:none!important;}
+
+/* 同高网格：对话框与按钮等高 */
+.input-area.same-height{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;      /* 让两行高度一致 */
+  gap: 0.75rem;
+}
+.input-area.same-height .input--capsule{
+  resize: none;             /* 禁止手动拖拽，保持外观一致 */
+  min-height: 0;            /* 让 grid 接管高度 */
+}
