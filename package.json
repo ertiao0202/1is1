@@ -3,17 +3,10 @@
   "version": "1.0.0",
   "description": "Instant Article Bias Check",
   "type": "module",
-  "engines": {
-    "node": ">=18.x"
-  },
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Static site - no build required'"
+    "dev": "echo 'Static site - no build step required'"
   },
-  "dependencies": {
-    "axios": "^1.6.0"
-  },
-  "devDependencies": {
-    "@vercel/node": "^2.0.0"
+  "engines": {
+    "node": "18.x"
   }
 }
