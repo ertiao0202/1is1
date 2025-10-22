@@ -1,6 +1,6 @@
-/* ========== 版本 1 – 完整 main.css ========== */
+/* ========== 美式极简版 main.css ========== */
 
-/* 进度条与输入框同宽 */
+/* 进度条 */
 .progress{
   display:block;
   width:100%;
@@ -16,10 +16,10 @@
 #progressInner{
   height:4px;
   background:#2563eb;
-  transition:width .25s;
+  transition:width .25s ease-out;
 }
 
-/* 基础变量与布局 */
+/* 设计变量 */
 :root{
   --bg:#ffffff;
   --text:#111827;
@@ -42,7 +42,8 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .hero{text-align:center;margin-bottom:2rem;}
 .hero__title{font-size:2rem;font-weight:700;}
 .hero__sub{font-size:1.125rem;color:#6b7280;margin-top:.5rem;}
-/* 输入区同高网格 */
+
+/* 同高网格输入区 */
 .input-area{display:grid;grid-template-columns:1fr auto;align-items:stretch;gap:1rem;margin-bottom:1.5rem;}
 .input--capsule{
   width:100%;min-height:calc(1em * 1.45 * 2 + .6rem * 2);max-height:calc(1em * 1.45 * 5 + .6rem * 2);
@@ -86,6 +87,7 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
 li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
 .footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;display:flex;gap:1rem;justify-content:center;}
+.footer a:hover{color:var(--primary);}
 .conf-high{border-left:4px solid #16a34a;background:#f0fdf4}.conf-mid{border-left:4px solid #f59e0b;background:#fffbeb}.conf-low{border-left:4px solid #dc2626;background:#fef2f2}
 li.conf-high::before,li.conf-mid::before,li.conf-low::before{display:none}
 .hidden{display:none!important;}
