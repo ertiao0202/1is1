@@ -8,21 +8,33 @@
 </head>
 <body>
   <div id="app">
-    <header>
-      <h1>FactLens</h1>
-      <p>Instant Article Bias Check</p>
+    <!-- 顶部蓝条 -->
+    <header class="top-bar">
+      <div class="inner">
+        <div class="logo">FactLens</div>
+        <nav class="nav">
+          <a href="/privacy.html">Privacy</a>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      <div class="input-section">
-        <textarea id="urlInput" placeholder="Paste article text here or enter URL..."></textarea>
-        <div class="button-group">
-          <button id="analyzeBtn">Analyze Bias</button>
-          <button id="clearBtn">Clear</button>
-        </div>
+    <!-- 主区 -->
+    <main class="wrapper">
+      <div class="hero">
+        <h1 class="hero__title">Instant Article Bias Check</h1>
+        <p class="hero__sub">Paste any article or YouTube link → get credibility score in seconds.</p>
       </div>
 
-      <!-- 结果区域 -->
+      <!-- 输入区 -->
+      <section class="input-area">
+        <textarea id="urlInput" class="input input--capsule" placeholder="Paste article text or URL..."></textarea>
+        <div class="button-group">
+          <button id="analyzeBtn" class="btn btn--primary">Analyze Bias</button>
+          <button id="clearBtn" class="btn">Clear</button>
+        </div>
+      </section>
+
+      <!-- 结果区（初始隐藏） -->
       <div id="progress" class="progress hidden">
         <span id="pct" class="progress__txt">0</span>
         <div class="progress__bar">
@@ -33,6 +45,7 @@
       <div id="summary" class="summary hidden"></div>
 
       <section id="fourDim" class="full-row hidden">
+        <!-- 四维度条形图 -->
         <div class="bar-group">
           <div class="bar-item">
             <div class="bar-label">Transparency</div>
@@ -55,39 +68,26 @@
             <div class="bar-track"><div id="csBar" class="bar-fill"></div></div>
           </div>
         </div>
+        <!-- 雷达图 -->
         <canvas id="radar" height="220"></canvas>
       </section>
 
       <div id="results" class="results hidden">
-        <div class="card card--fact">
-          <h3>Facts</h3>
-          <ul id="factList"></ul>
-        </div>
-        <div class="card card--opinion">
-          <h3>Opinions</h3>
-          <ul id="opinionList"></ul>
-        </div>
-        <div class="card card--bias">
-          <h3>Signs of Bias</h3>
-          <ul id="biasList"></ul>
-        </div>
-        <div class="card">
-          <h3>Publisher Tip</h3>
-          <p id="pubAdvice"></p>
-        </div>
-        <div class="card">
-          <h3>PR Reply</h3>
-          <p id="prAdvice"></p>
-        </div>
+        <div class="card card--fact"><h3>Facts</h3><ul id="factList"></ul></div>
+        <div class="card card--opinion"><h3>Opinions</h3><ul id="opinionList"></ul></div>
+        <div class="card card--bias"><h3>Signs of Bias</h3><ul id="biasList"></ul></div>
+        <div class="card"><h3>Publisher Tip</h3><p id="pubAdvice"></p></div>
+        <div class="card"><h3>PR Reply</h3><p id="prAdvice"></p></div>
       </div>
     </main>
 
-    <footer>
+    <!-- 页脚 -->
+    <footer class="footer">
       <a href="/privacy.html">Privacy Policy</a>
     </footer>
   </div>
 
-  <!-- 必须放在 app.js 之前 -->
+  <!-- 脚本 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="/js/app.js" type="module"></script>
 </body>
