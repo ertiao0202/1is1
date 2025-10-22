@@ -1,4 +1,4 @@
-// api/chat.js  Edge Runtime 版（去掉 dotenv，直接用 Vercel 环境变量）
+// api/chat.js  Edge Runtime
 export const config = { runtime: 'edge' };
 
 export default async function handler(req) {
@@ -6,7 +6,6 @@ export default async function handler(req) {
     return new Response('Method Not Allowed', { status: 405 });
   }
 
-  // 直接读 Vercel 环境变量
   const apiKey = process.env.KIMI_API_KEY;
   if (!apiKey) {
     return new Response('Missing KIMI_API_KEY', { status: 500 });
