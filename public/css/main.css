@@ -1,4 +1,4 @@
-/* ========== 美式极简版 main.css（含斜体层级 & 留白） ========== */
+/* ========== 硅谷精修版 main.css（居中留白 + 斜体层级） ========== */
 
 /* 1. 字体家族 + 平滑 */
 body{
@@ -27,9 +27,9 @@ body{
 .input--capsule{font-size:1rem;font-weight:400;line-height:1.5;}
 .btn--primary{font-size:1rem;font-weight:500;line-height:1;}
 
-/* 4. 留白呼吸 */
-.hero{padding:5rem 1rem 4rem;}
-.wrapper{padding-top:2rem;}
+/* 4. 居中留白 + 通屏修复 */
+.wrapper{max-width:var(--maxWidth);margin:0 auto;padding:2rem 1rem;}
+.hero{padding:5rem 1rem 4rem;text-align:center;}
 
 /* 5. 同高网格输入区 */
 .input-area{display:grid;grid-template-columns:1fr auto;align-items:stretch;gap:1rem;margin-bottom:2rem;}
