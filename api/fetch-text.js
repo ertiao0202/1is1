@@ -1,4 +1,4 @@
-// api/fetch-text.js  Edge Runtime 
+// api/fetch-text.js  Edge Runtime  
 export const config = { runtime: 'edge' };
 
 export default async function(req) {
