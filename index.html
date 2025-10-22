@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FactLens – Instant Article Bias Check</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="inner">
+      <h1 class="logo">FactLens</h1>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrapper">
+    <section class="hero">
+      <h2 class="hero__title">Instantly separate Facts, Opinions &amp; Biases</h2>
+      <p class="hero__sub">Paste a URL or text and hit Enter.</p>
+    </section>
+
+    <section class="input-area">
+      <textarea
+        id="urlInput"
+        placeholder="Enter URL or paste text here"
+        class="input input--capsule"
+        rows="1"
+      ></textarea>
+      <button id="analyzeBtn" class="btn btn--primary" type="button">Analyze</button>
+    </section>
+
+    <section id="progress" class="progress hidden">
+      <span class="progress__txt">Analyzing… <span id="pct">0</span>%</span>
+      <div class="progress__bar">
+        <div id="progressInner" style="height:4px;background:#2563eb;width:0%"></div>
+      </div>
+    </section>
+
+    <section id="summary" class="summary hidden"></section>
+
+    <section id="fourDim" class="analysis-card full-row hidden">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        <i class="fas fa-chart-line text-blue-500 mr-2"></i>4-Dimension Breakdown
+      </h2>
+      <div class="bar-group">
+        <div class="bar-item">
+          <div class="bar-label">Source Credibility</div>
+          <div class="bar-value" id="tsVal">0</div>
+          <div class="bar-track"><div class="bar-fill" id="tsBar"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label">Fact Density</div>
+          <div class="bar-value" id="fdVal">0</div>
+          <div class="bar-track"><div class="bar-fill" id="fdBar"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label">Emotional Neutrality</div>
+          <div class="bar-value" id="ebVal">0</div>
+          <div class="bar-track"><div class="bar-fill" id="ebBar"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label">Consistency</div>
+          <div class="bar-value" id="csVal">0</div>
+          <div class="bar-track"><div class="bar-fill" id="csBar"></div></div>
+        </div>
+      </div>
+      <details>
+        <summary class="summary__radar">View Radar Chart</summary>
+        <canvas id="radar"></canvas>
+      </details>
+    </section>
+
+    <section id="results" class="results hidden">
+      <article class="card card--fact">
+        <h3>Facts</h3>
+        <ul id="factList"></ul>
+      </article>
+
+      <article class="card card--opinion">
+        <h3>Opinions</h3>
+        <ul id="opinionList"></ul>
+      </article>
+
+      <article class="card card--bias">
+        <h3>Signs of Bias</h3>
+        <ul id="biasList"></ul>
+      </article>
+
+      <article class="card card--advice">
+        <h3>Advice for Publishers</h3>
+        <p id="pubAdvice"></p>
+      </article>
+
+      <article class="card card--pr">
+        <h3>PR Response Tips</h3>
+        <p id="prAdvice"></p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="/privacy">Privacy Policy</a> ·
+    <a href="#terms">Terms of Service</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
