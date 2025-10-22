@@ -1,6 +1,6 @@
-/* ========== 恢复版 main.css（仅改「Cut the noise. Know the real.」字体，其余保持原样） ========== */
+/* ========== 美式极简版 main.css（含斜体层级 & 留白） ========== */
 
-/* 1. 进度条 */
+/* 进度条 */
 .progress{
   display:block;
   width:100%;
@@ -19,7 +19,7 @@
   transition:width .25s ease-out;
 }
 
-/* 2. 设计变量（保持原值） */
+/* 设计变量 */
 :root{
   --bg:#ffffff;
   --text:#111827;
@@ -40,30 +40,24 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .nav a:hover{text-decoration:underline;}
 .wrapper{max-width:var(--maxWidth);margin:0 auto;padding:2rem 1rem;}
 
-/* 3. 仅改「Cut the noise. Know the real.」字体 */
-.hero__sub{
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
-  font-size:1.125rem;
-  font-weight:500;          /* 比默认粗一点，更有活力 */
-  letter-spacing:0.4px;
-  color:#6b7280;
-  margin-top:.5rem;
-}
+/* ===== 斜体层级 + 留白呼吸 ===== */
+.hero{padding:4rem 1rem 3rem;}
+.hero__title{font-size:2.25rem;font-weight:800;line-height:1.2;letter-spacing:-.5px;}
+.hero__title em{font-style:italic;color:#6b7280;font-weight:400;font-size:1.5rem;display:block;margin-top:.25rem;}
+.hero__sub{font-size:1.125rem;margin-top:.75rem;}
 
-/* 4. 同高网格输入区（保持原样） */
+/* 同高网格输入区 */
 .input-area{display:grid;grid-template-columns:1fr auto;align-items:stretch;gap:1rem;margin-bottom:1.5rem;}
 .input--capsule{
   width:100%;min-height:calc(1em * 1.45 * 2 + .6rem * 2);max-height:calc(1em * 1.45 * 5 + .6rem * 2);
   padding:0.6rem 1rem;border:1px solid #d1d5db;border-radius:var(--radius);background:#ffffff;resize:none;
-  overflow-y:auto;line-height:1.45;font-size:1rem;box-shadow:0 4px 12px rgba(0,0,0,.05);
+  overflow-y:auto;line-height:1.45;font-size:1rem;box-shadow:0 4px 12px rgba(0,0,0,.06);
   transition:box-shadow .2s, height .15s ease-out;
 }
 .input--capsule:focus{border-color:#2563eb;box-shadow:0 6px 20px rgba(37,99,235,.15);outline:none;}
-.btn{padding:0.6rem 1.75rem;border:1px solid var(--border);background:var(--bg);cursor:pointer;border-radius:var(--radius);}
-.btn--primary{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;letter-spacing:.4px;transition:transform .15s, background .2s;}
+.btn{padding:0.6rem 1.75rem;border:1px solid var(--border);background:var(--bg);font-size:1rem;cursor:pointer;border-radius:var(--radius);}
+.btn--primary{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;letter-spacing:.5px;transition:transform .15s, background .2s;}
 .btn--primary:hover{transform:translateY(-1px);}
-
-/* 5. 其余组件保持原样 */
 .progress__txt{font-size:0.875rem;color:#6b7280;margin-bottom:0.25rem;display:block;font-weight:600;letter-spacing:.5px;}
 .summary{padding:1rem;border:1px solid var(--border);margin-bottom:1.5rem;font-weight:600;border-radius:var(--radius);}
 .full-row{
@@ -90,6 +84,9 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;border-radius:var(--radius);transition:transform .2s, box-shadow .2s;}
 .card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
 .card h3{margin-bottom:0.75rem;font-size:1.125rem;}
+.card--fact h3{color:var(--primary);}
+.card--opinion h3{color:var(--success);}
+.card--bias h3{color:var(--danger);}
 ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
 li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
 .footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;display:flex;gap:1rem;justify-content:center;}
