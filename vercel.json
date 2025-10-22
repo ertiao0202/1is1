@@ -1,16 +1,11 @@
 {
   "version": 2,
-  "buildCommand": null,
-  "outputDirectory": "public",
-  "functions": {
-    "api/*.js": { "runtime": "edge" }
-  },
   "routes": [
     { "src": "/api/chat", "dest": "/api/chat.js" },
     { "src": "/api/fetch-text", "dest": "/api/fetch-text.js" },
     { "src": "/privacy", "dest": "/public/privacy.html" },
     {
-      "src": "/(.*\\.(css|js|png|jpg|ico))",
+      "src": "/(.*\\.(css|js|png|jpg|ico|svg|woff2?))",
       "dest": "/public/$1",
       "headers": { "Cache-Control": "public, max-age=31536000, immutable" }
     },
