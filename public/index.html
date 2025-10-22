@@ -8,11 +8,12 @@
 </head>
 <body>
   <div id="app">
-    <!-- 顶部蓝条 -->
+    <!-- 顶部导航 -->
     <header class="top-bar">
       <div class="inner">
         <div class="logo">FactLens</div>
         <nav class="nav">
+          <a href="/about.html">About</a>
           <a href="/privacy.html">Privacy</a>
         </nav>
       </div>
@@ -21,22 +22,21 @@
     <!-- 主区 -->
     <main class="wrapper">
       <div class="hero">
-        <h1 class="hero__title">Instant Article Bias Check</h1>
-        <p class="hero__sub">Paste any article or YouTube link → get credibility score in seconds.</p>
+        <h1 class="hero__title">Instantly separate Facts, Opinions & Biases</h1>
+        <p class="hero__sub">Paste a URL or text and hit Enter.</p>
       </div>
 
       <!-- 输入区 -->
       <section class="input-area">
         <textarea id="urlInput" class="input input--capsule" placeholder="Paste article text or URL..."></textarea>
         <div class="button-group">
-          <button id="analyzeBtn" class="btn btn--primary">Analyze Bias</button>
-          <button id="clearBtn" class="btn">Clear</button>
+          <button id="analyzeBtn" class="btn btn--primary">Analyze</button>
         </div>
       </section>
 
-      <!-- 结果区（初始隐藏） -->
+      <!-- 进度条 -->
       <div id="progress" class="progress hidden">
-        <span id="pct" class="progress__txt">0</span>
+        <span class="progress__txt">Analyzing&nbsp;<span id="pct">0</span>%</span>
         <div class="progress__bar">
           <div id="progressInner" style="width:0%"></div>
         </div>
@@ -44,11 +44,13 @@
 
       <div id="summary" class="summary hidden"></div>
 
+      <!-- 4-D 标题 -->
       <section id="fourDim" class="full-row hidden">
+        <h2 style="margin-bottom:1rem;font-size:1.25rem;font-weight:600;">4-Dimension Breakdown</h2>
         <!-- 四维度条形图 -->
         <div class="bar-group">
           <div class="bar-item">
-            <div class="bar-label">Transparency</div>
+            <div class="bar-label">Source Credibility</div>
             <div class="bar-value"><span id="tsVal">0.0</span>/10</div>
             <div class="bar-track"><div id="tsBar" class="bar-fill"></div></div>
           </div>
@@ -58,7 +60,7 @@
             <div class="bar-track"><div id="fdBar" class="bar-fill"></div></div>
           </div>
           <div class="bar-item">
-            <div class="bar-label">Neutrality</div>
+            <div class="bar-label">Emotional Neutrality</div>
             <div class="bar-value"><span id="ebVal">0.0</span>/10</div>
             <div class="bar-track"><div id="ebBar" class="bar-fill"></div></div>
           </div>
@@ -68,10 +70,13 @@
             <div class="bar-track"><div id="csBar" class="bar-fill"></div></div>
           </div>
         </div>
-        <!-- 雷达图 -->
-        <canvas id="radar" height="220"></canvas>
+
+        <!-- 雷达图折叠区 -->
+        <div class="summary__radar" id="radarToggle">View Radar Chart</div>
+        <canvas id="radar" class="hidden" height="220"></canvas>
       </section>
 
+      <!-- 结果卡片 -->
       <div id="results" class="results hidden">
         <div class="card card--fact"><h3>Facts</h3><ul id="factList"></ul></div>
         <div class="card card--opinion"><h3>Opinions</h3><ul id="opinionList"></ul></div>
@@ -84,10 +89,10 @@
     <!-- 页脚 -->
     <footer class="footer">
       <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
     </footer>
   </div>
 
-  <!-- 脚本 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="/js/app.js" type="module"></script>
 </body>
