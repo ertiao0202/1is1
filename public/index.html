@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FactLens – Instant Article Bias Check</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>FactLens</h1>
+      <p>Instant Article Bias Check</p>
+    </header>
+
+    <main>
+      <div class="input-section">
+        <textarea id="urlInput" placeholder="Paste article text here or enter URL..."></textarea>
+        <div class="button-group">
+          <button id="analyzeBtn">Analyze Bias</button>
+          <button id="clearBtn">Clear</button>
+        </div>
+      </div>
+
+      <!-- 结果区域 -->
+      <div id="progress" class="progress hidden">
+        <span id="pct" class="progress__txt">0</span>
+        <div class="progress__bar">
+          <div id="progressInner" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div id="summary" class="summary hidden"></div>
+
+      <section id="fourDim" class="full-row hidden">
+        <div class="bar-group">
+          <div class="bar-item">
+            <div class="bar-label">Transparency</div>
+            <div class="bar-value"><span id="tsVal">0.0</span>/10</div>
+            <div class="bar-track"><div id="tsBar" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Fact Density</div>
+            <div class="bar-value"><span id="fdVal">0.0</span>/10</div>
+            <div class="bar-track"><div id="fdBar" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Neutrality</div>
+            <div class="bar-value"><span id="ebVal">0.0</span>/10</div>
+            <div class="bar-track"><div id="ebBar" class="bar-fill"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Consistency</div>
+            <div class="bar-value"><span id="csVal">0.0</span>/10</div>
+            <div class="bar-track"><div id="csBar" class="bar-fill"></div></div>
+          </div>
+        </div>
+        <canvas id="radar" height="220"></canvas>
+      </section>
+
+      <div id="results" class="results hidden">
+        <div class="card card--fact">
+          <h3>Facts</h3>
+          <ul id="factList"></ul>
+        </div>
+        <div class="card card--opinion">
+          <h3>Opinions</h3>
+          <ul id="opinionList"></ul>
+        </div>
+        <div class="card card--bias">
+          <h3>Signs of Bias</h3>
+          <ul id="biasList"></ul>
+        </div>
+        <div class="card">
+          <h3>Publisher Tip</h3>
+          <p id="pubAdvice"></p>
+        </div>
+        <div class="card">
+          <h3>PR Reply</h3>
+          <p id="prAdvice"></p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <a href="/privacy.html">Privacy Policy</a>
+    </footer>
+  </div>
+
+  <!-- 必须放在 app.js 之前 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="/js/app.js" type="module"></script>
+</body>
+</html>
