@@ -1,0 +1,81 @@
+/* ====== 进度条与输入框同宽 ====== */
+.progress{
+  display:block;          /* 去掉 flex 拉伸 */
+  width:100%;             /* 跟 .input-area 同宽 */
+  max-width:840px;        /* 与 .wrapper 上限对齐 */
+  margin:0 auto 1.5rem;   /* 居中，保留上下间距 */
+}
+.progress__bar{
+  height:4px;
+  background:#e5e7eb;
+  border-radius:4px;
+  overflow:hidden;
+}
+#progressInner{
+  height:4px;
+  background:#2563eb;
+  transition:width .25s;
+}
+
+/* ====== 其余样式保持原样 ====== */
+:root{
+  --bg:#ffffff;
+  --text:#111827;
+  --border:#d1d5db;
+  --primary:#2563eb;
+  --danger:#dc2626;
+  --success:#16a34a;
+  --warning:#f59e0b;
+  --radius:0;
+  --maxWidth:840px;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;}
+body{background:var(--bg);color:var(--text);line-height:1.5;}
+.top-bar{border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10;}
+.inner{max-width:var(--maxWidth);margin:0 auto;padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-size:1.25rem;font-weight:700;letter-spacing:-0.5px;}
+.nav a{margin-left:1rem;color:var(--text);text-decoration:none;}
+.nav a:hover{text-decoration:underline;}
+.wrapper{max-width:var(--maxWidth);margin:0 auto;padding:2rem 1rem;}
+.hero{text-align:center;margin-bottom:2rem;}
+.hero__title{font-size:2rem;font-weight:700;}
+.hero__sub{font-size:1.125rem;color:#6b7280;}
+.input-area{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
+.input{flex:1;padding:0.75rem 1rem;border:1px solid var(--border);font-size:1rem;resize:vertical;}
+.input--capsule{
+  width:100%;min-height:calc(1em * 1.5 + 0.6rem * 2);max-height:calc(1em * 1.5 * 5 + 0.6rem * 2);
+  padding:0.6rem 1rem;border:1px solid #d1d5db;border-radius:1.25rem;background:#ffffff;resize:none;
+  overflow-y:auto;line-height:1.5;font-size:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);
+  transition:box-shadow .2s, height .15s ease-out;
+}
+.input--capsule:focus{border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.15);outline:none;}
+.btn{padding:0.75rem 1.5rem;border:1px solid var(--border);background:var(--bg);font-size:1rem;cursor:pointer;}
+.btn--primary{background:var(--primary);color:#fff;border-color:var(--primary);}
+.btn--primary:hover{opacity:0.9;}
+.progress__txt{font-size:0.875rem;color:#6b7280;margin-bottom:0.25rem;display:block;}
+.summary{padding:1rem;border:1px solid var(--border);margin-bottom:1.5rem;font-weight:600;}
+.full-row{
+  grid-column:1/-1;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 32px rgba(0,0,0,.1);
+  border-radius:1rem;padding:2rem;margin-bottom:1.5rem;
+}
+.bar-group{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:0.5rem;}
+.bar-item{display:flex;flex-direction:column;gap:0.25rem;}
+.bar-label{font-size:0.875rem;color:#374151;}
+.bar-value{font-size:1.125rem;font-weight:600;color:#111827;text-align:right;}
+.bar-track{height:8px;background:#e5e7eb;border-radius:0;overflow:hidden;}
+.bar-fill{height:8px;border-radius:0;transition:width .3s ease;}
+#tsBar{background:#2563eb;}#fdBar{background:#16a34a;}#ebBar{background:#f59e0b;}#csBar{background:#9333ea;}
+.summary__radar{margin-top:1rem;font-size:0.875rem;color:#6b7280;cursor:pointer;}
+.summary__radar:hover{color:#2563eb;}
+.results{display:grid;gap:1.5rem;grid-template-columns:1fr;}
+@media(min-width:600px){.results{grid-template-columns:repeat(2,1fr);}}
+.card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;}
+.card h3{margin-bottom:0.75rem;font-size:1.125rem;}
+.card--fact h3{color:var(--primary)}.card--opinion h3{color:var(--success)}.card--bias h3{color:var(--danger)}
+ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
+li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
+.footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;}
+.conf-high{border-left:4px solid #16a34a;background:#f0fdf4}.conf-mid{border-left:4px solid #f59e0b;background:#fffbeb}.conf-low{border-left:4px solid #dc2626;background:#fef2f2}
+li.conf-high::before,li.conf-mid::before,li.conf-low::before{display:none}
+.hidden{display:none!important;}
