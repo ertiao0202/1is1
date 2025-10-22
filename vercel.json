@@ -8,6 +8,10 @@
       "dest": "/privacy.html"
     },
     {
+      "src": "/app.js",
+      "dest": "/app.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
