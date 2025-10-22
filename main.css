@@ -73,6 +73,12 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;}
 .card h3{margin-bottom:0.75rem;font-size:1.125rem;}
 .card--fact h3{color:var(--primary)}.card--opinion h3{color:var(--success)}.card--bias h3{color:var(--danger)}
+/* ====== 让 Signs of Bias 横向占满两栏 ====== */
+.card--bias {
+  grid-column: 1 / -1;              /* 通栏 */
+  border-left: 4px solid var(--danger);
+  background: #fef2f2;
+}
 ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
 li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
 .footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;}
