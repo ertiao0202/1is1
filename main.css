@@ -1,9 +1,11 @@
-/* ====== 进度条与输入框同宽 ====== */
+/* ========== 版本 1 – 完整 main.css ========== */
+
+/* 进度条与输入框同宽 */
 .progress{
-  display:block;          /* 去掉 flex 拉伸 */
-  width:100%;             /* 跟 .input-area 同宽 */
-  max-width:840px;        /* 与 .wrapper 上限对齐 */
-  margin:0 auto 1.5rem;   /* 居中，保留上下间距 */
+  display:block;
+  width:100%;
+  max-width:840px;
+  margin:0 auto 1.5rem;
 }
 .progress__bar{
   height:4px;
@@ -17,7 +19,7 @@
   transition:width .25s;
 }
 
-/* ====== 其余样式保持原样 ====== */
+/* 基础变量与布局 */
 :root{
   --bg:#ffffff;
   --text:#111827;
@@ -69,16 +71,20 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .summary__radar{margin-top:1rem;font-size:0.875rem;color:#6b7280;cursor:pointer;}
 .summary__radar:hover{color:#2563eb;}
 .results{display:grid;gap:1.5rem;grid-template-columns:1fr;}
-@media(min-width:600px){.results{grid-template-columns:repeat(2,1fr);}}
+
+/* ====== 版本 1 新增：Facts 通栏，Opinions & Signs of Bias 同排 ====== */
+@media(min-width:600px){
+  .results{grid-template-columns:repeat(2,1fr);}
+  .card--fact{grid-column:1/-1;}                     /* Facts 通栏 */
+  .card--opinion,
+  .card--bias{grid-column:span 1;}                  /* 各占 1/2 栏 */
+}
+
 .card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;}
 .card h3{margin-bottom:0.75rem;font-size:1.125rem;}
-.card--fact h3{color:var(--primary)}.card--opinion h3{color:var(--success)}.card--bias h3{color:var(--danger)}
-/* ====== 让 Signs of Bias 横向占满两栏 ====== */
-.card--bias {
-  grid-column: 1 / -1;              /* 通栏 */
-  border-left: 4px solid var(--danger);
-  background: #fef2f2;
-}
+.card--fact h3{color:var(--primary);}
+.card--opinion h3{color:var(--success);}
+.card--bias h3{color:var(--danger);}
 ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
 li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
 .footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;}
