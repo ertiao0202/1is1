@@ -14,46 +14,51 @@
       "use": "@vercel/static"
     },
     {
-      "src": "api/chat.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/fetch-text.js",
+      "src": "api/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
       "src": "/privacy",
       "dest": "/privacy.html"
-    },
-    {
-      "src": "/app.js",
-      "dest": "/app.js"
-    },
-    {
-      "src": "/main.css",
-      "dest": "/main.css"
-    },
-    {
-      "src": "/api/chat",
-      "dest": "/api/chat.js"
-    },
-    {
-      "src": "/api/fetch-text",
-      "dest": "/api/fetch-text.js"
     },
     {
       "src": "/(.*)",
       "dest": "/index.html"
     }
   ],
-  "functions": {
-    "api/chat.js": {
-      "maxDuration": 30
+  "headers": [
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html; charset=utf-8"
+        }
+      ]
     },
-    "api/fetch-text.js": {
-      "maxDuration": 30
+    {
+      "source": "/(.*)\\.css",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.js",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        }
+      ]
     }
-  }
+  ]
 }
