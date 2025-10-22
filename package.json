@@ -2,9 +2,8 @@
   "name": "factlens-app",
   "version": "1.0.0",
   "description": "Instant Article Bias Check",
-  "type": "module",
   "scripts": {
-    "dev": "echo 'Static site - no build step required'"
+    "dev": "vercel dev"
   },
   "engines": {
     "node": "22.x"
