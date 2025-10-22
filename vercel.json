@@ -1,32 +1,18 @@
-{ 
+{
   "functions": {
     "api/chat.js": { "maxDuration": 59 }
   },
   "headers": [
     {
-      "source": "/(.*).html",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Content-Type",
           "value": "text/html; charset=utf-8"
-        }
-      ]
-    },
-    {
-      "source": "/(.*).css",
-      "headers": [
+        },
         {
-          "key": "Content-Type",
-          "value": "text/css; charset=utf-8"
-        }
-      ]
-    },
-    {
-      "source": "/(.*).js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript; charset=utf-8"
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
         }
       ]
     }
@@ -34,21 +20,23 @@
   "routes": [
     {
       "src": "/privacy",
-      "dest": "/privacy.html",
-      "headers": {
-        "Content-Type": "text/html; charset=utf-8"
-      }
+      "dest": "/privacy.html"
     },
     {
       "src": "/app.js",
       "dest": "/app.js"
     },
     {
+      "src": "/main.css",
+      "dest": "/main.css"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/index.html",
-      "headers": {
-        "Content-Type": "text/html; charset=utf-8"
-      }
+      "dest": "/index.html"
     }
   ]
 }
