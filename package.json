@@ -1,8 +1,19 @@
 {
-  "name": "factlens",
+  "name": "factlens-app",
   "version": "1.0.0",
+  "description": "Instant Article Bias Check",
   "type": "module",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build required'"
+  },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^2.0.0"
   }
 }
