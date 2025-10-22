@@ -24,9 +24,26 @@ const ui = {
 /* 原生自动增高 */
 const tx = ui.input;
 tx.addEventListener('input', () => {
-  tx.style.height = 'auto';
+  tx.style.height = '来源代码';
   tx.style.height = tx.scrollHeight + 'px';
 });
+
+/* 新增：判断 YouTube 链接 */
+function isYoutubeUrl(str) {
+  return /(youtube\.com|youtu\.be)/i.test(str);
+}
+
+/* 新增：拉 YouTube 字幕 */
+async function fetchYoutubeText(url) {
+  const res = await fetch('/api/fetch-text', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url })
+  });
+  if (!res.ok) return null;
+  const { text } = await res.json();
+  return text;
+}
 
 /* 工具函数 */
 function smoothNeutrality(n){
@@ -63,7 +80,7 @@ function showSummary(txt){
   ui.summary.classList.remove('hidden');
 }
 
-/* ******** 进度条优化 ******** */
+/* 进度条优化 */
 let pctTick; // 全局计时器句柄
 
 function showProgress(){
@@ -88,8 +105,6 @@ function hideProgress(){
   clearInterval(pctTick);
   ui.progress.classList.add('hidden');
 }
-/* *************************** */
-
 function drawBars({ transparency, factDensity, emotion, consistency }){
   const max = 10;
   document.getElementById('tsVal').textContent = transparency.toFixed(1);
@@ -119,16 +134,40 @@ function drawRadar(data){
     options:{ scales:{ r:{ suggestedMin:0, suggestedMax:10 } }, plugins:{ legend:{ display:false } } }
   });
 }
+function render(r){
+  showSummary(r.summary);
+  const ts = Math.min(10, 0.5 + (r.credibility || 8));
+  const fd = Math.min(10, 1.5 + (r.facts.length || 0) * 1.8);
+  const ebRaw = (r.bias.emotional + r.bias.binary + r.bias.mind);
+  const eb = smoothNeutrality(ebRaw);
+  const cs = Math.min(10, 0.5 + (ts + fd + eb) / 3);
+  drawBars({ transparency: ts, factDensity: fd, emotion: eb, consistency: cs });
+  drawRadar([ts, fd, eb, cs]);
+  listConf(ui.fact,    r.facts);
+  listConf(ui.opinion, r.opinions);
+  bias(ui.bias,    r.bias);
+  ui.pub.textContent = r.publisher;
+  ui.pr.textContent  = r.pr;
+  ui.fourDim.classList.remove('hidden');
+  ui.results.classList.remove('hidden');
+}
 
 /* 主流程 */
 async function handleAnalyze(){
-  if (isAnalyzing) return;
   const raw = ui.input.value.trim();
   if (!raw){ hideProgress(); return; }
+
+  // 新增：YouTube 字幕自动获取
+  if (isYoutubeUrl(raw)) {
+    const text = await fetchYoutubeText(raw);
+    if (!text) { showSummary('No subtitle found, please paste text directly.'); await new Promise(r => setTimeout(r, COOL_DOWN)); return; }
+    ui.input.value = text;
+  }
+
   isAnalyzing = true;
   showProgress();
   try {
-    const { content, title } = await fetchContent(raw);
+    const { content, title } = await fetchContent(ui.input.value);
     const report = await analyzeContent(content, title);
     render(report);
   } catch (e) {
