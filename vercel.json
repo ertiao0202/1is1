@@ -1,5 +1,15 @@
 {
   "functions": {
     "api/chat.js": { "maxDuration": 59 }
-  }
+  },
+  "routes": [
+    {
+      "src": "/privacy",
+      "dest": "/public/privacy.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
