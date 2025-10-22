@@ -1,0 +1,8 @@
+{
+  "github": {
+    "enabled": false
+  },
+  "functions": {
+    "api/chat.js": { "maxDuration": 59 }
+  }
+}
