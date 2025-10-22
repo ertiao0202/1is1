@@ -7,6 +7,6 @@
     "dev": "echo 'Static site - no build step required'"
   },
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   }
 }
