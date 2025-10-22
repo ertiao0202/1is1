@@ -72,57 +72,15 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 @media(min-width:600px){.results{grid-template-columns:repeat(2,1fr);}}
 .card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;}
 .card h3{margin-bottom:0.75rem;font-size:1.125rem;}
-.card--fact h3{color:var(--primary)}.card--opinion h3{color:var(--success)}
-
-/* ====== Signs of Bias 卡片：左 3 栏 + 右 2 栏 ====== */
+.card--fact h3{color:var(--primary)}.card--opinion h3{color:var(--success)}.card--bias h3{color:var(--danger)}
+/* ====== 让 Signs of Bias 横向占满两栏 ====== */
 .card--bias {
-  grid-column: 1 / -1;                     /* 横向通栏 */
+  grid-column: 1 / -1;              /* 通栏 */
   border-left: 4px solid var(--danger);
   background: #fef2f2;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);   /* 5 栏总宽 */
-  gap: 1rem;                               /* 栏间距 */
-  padding: 1.25rem;
 }
-
-.card--bias h3 {
-  grid-column: 1 / -1;                     /* 标题占满一行 */
-  margin-bottom: 0.75rem;
-  font-size: 1.125rem;
-  color: var(--danger);
-}
-
-/* 左 3 栏：Emotional / Binary / Mind-reading */
-.card--bias .bias-left {
-  grid-column: 1 / 4;                      /* 第 1-3 栏 */
-}
-
-/* 右 2 栏：Logical fallacy / Overall stance */
-.card--bias .bias-right {
-  grid-column: 4 / 6;                      /* 第 4-5 栏 */
-}
-
-/* 内部列表样式（保持原样） */
-.card--bias ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.card--bias li {
-  margin-bottom: 0.5rem;
-  padding-left: 1rem;
-  position: relative;
-}
-.card--bias li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 5px;
-  height: 5px;
-  background: currentColor;
-  border-radius: 50%;
-}
+ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
+li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
 .footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;}
 .conf-high{border-left:4px solid #16a34a;background:#f0fdf4}.conf-mid{border-left:4px solid #f59e0b;background:#fffbeb}.conf-low{border-left:4px solid #dc2626;background:#fef2f2}
 li.conf-high::before,li.conf-mid::before,li.conf-low::before{display:none}
