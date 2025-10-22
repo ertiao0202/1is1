@@ -28,38 +28,38 @@
   --danger:#dc2626;
   --success:#16a34a;
   --warning:#f59e0b;
-  --radius:0;
+  --radius:12px;
   --maxWidth:840px;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;}
 body{background:var(--bg);color:var(--text);line-height:1.5;}
-.top-bar{border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10;}
+.top-bar{border-bottom:1px solid #e5e7eb;background:var(--bg);position:sticky;top:0;z-index:10;}
 .inner{max-width:var(--maxWidth);margin:0 auto;padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;}
 .logo{font-size:1.25rem;font-weight:700;letter-spacing:-0.5px;}
 .nav a{margin-left:1rem;color:var(--text);text-decoration:none;}
 .nav a:hover{text-decoration:underline;}
-.wrapper{max-width:var(--maxWidth);margin:0 auto;padding:2rem 1rem;}
+.wrapper{max-width:var(--maxWidth);margin:0 auto;padding:3rem 1rem 2rem;}
 .hero{text-align:center;margin-bottom:2rem;}
 .hero__title{font-size:2rem;font-weight:700;}
-.hero__sub{font-size:1.125rem;color:#6b7280;}
-.input-area{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
-.input{flex:1;padding:0.75rem 1rem;border:1px solid var(--border);font-size:1rem;resize:vertical;}
+.hero__sub{font-size:1.125rem;color:#6b7280;margin-top:.5rem;}
+/* 输入区同高网格 */
+.input-area{display:grid;grid-template-columns:1fr auto;align-items:stretch;gap:1rem;margin-bottom:1.5rem;}
 .input--capsule{
-  width:100%;min-height:calc(1em * 1.5 * 3 + 0.6rem * 2);max-height:calc(1em * 1.5 * 5 + 0.6rem * 2);
-  padding:0.6rem 1rem;border:1px solid #d1d5db;border-radius:1.25rem;background:#ffffff;resize:none;
-  overflow-y:auto;line-height:1.5;font-size:1rem;box-shadow:0 2px 6px rgba(0,0,0,.05);
+  width:100%;min-height:calc(1em * 1.45 * 2 + .6rem * 2);max-height:calc(1em * 1.45 * 5 + .6rem * 2);
+  padding:0.6rem 1rem;border:1px solid #d1d5db;border-radius:var(--radius);background:#ffffff;resize:none;
+  overflow-y:auto;line-height:1.45;font-size:1rem;box-shadow:0 4px 12px rgba(0,0,0,.06);
   transition:box-shadow .2s, height .15s ease-out;
 }
-.input--capsule:focus{border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.15);outline:none;}
-.btn{padding:0.75rem 1.5rem;border:1px solid var(--border);background:var(--bg);font-size:1rem;cursor:pointer;}
-.btn--primary{background:var(--primary);color:#fff;border-color:var(--primary);}
-.btn--primary:hover{opacity:0.9;}
-.progress__txt{font-size:0.875rem;color:#6b7280;margin-bottom:0.25rem;display:block;}
-.summary{padding:1rem;border:1px solid var(--border);margin-bottom:1.5rem;font-weight:600;}
+.input--capsule:focus{border-color:#2563eb;box-shadow:0 6px 20px rgba(37,99,235,.15);outline:none;}
+.btn{padding:0.6rem 1.75rem;border:1px solid var(--border);background:var(--bg);font-size:1rem;cursor:pointer;border-radius:var(--radius);}
+.btn--primary{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;letter-spacing:.4px;transition:transform .15s, background .2s;}
+.btn--primary:hover{transform:translateY(-1px);}
+.progress__txt{font-size:0.875rem;color:#6b7280;margin-bottom:0.25rem;display:block;font-weight:600;letter-spacing:.5px;}
+.summary{padding:1rem;border:1px solid var(--border);margin-bottom:1.5rem;font-weight:600;border-radius:var(--radius);}
 .full-row{
   grid-column:1/-1;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 32px rgba(0,0,0,.1);
-  border-radius:1rem;padding:2rem;margin-bottom:1.5rem;
+  border-radius:var(--radius);padding:2rem;margin-bottom:1.5rem;
 }
 .bar-group{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:0.5rem;}
 .bar-item{display:flex;flex-direction:column;gap:0.25rem;}
@@ -68,38 +68,24 @@ body{background:var(--bg);color:var(--text);line-height:1.5;}
 .bar-track{height:8px;background:#e5e7eb;border-radius:0;overflow:hidden;}
 .bar-fill{height:8px;border-radius:0;transition:width .3s ease;}
 #tsBar{background:#2563eb;}#fdBar{background:#16a34a;}#ebBar{background:#f59e0b;}#csBar{background:#9333ea;}
-.summary__radar{margin-top:1rem;font-size:0.875rem;color:#6b7280;cursor:pointer;}
-.summary__radar:hover{color:#2563eb;}
+#fourDim h2{font-size:1.5rem;font-weight:700;color:#111827;margin-bottom:1.25rem;}
+.summary__radar{padding:.5rem .75rem;border-radius:var(--radius);background:#f3f4f6;display:inline-block;margin-top:.75rem;cursor:pointer;font-weight:500;transition:background .2s;}
+.summary__radar:hover{background:#e5e7eb;color:#111827;}
 .results{display:grid;gap:1.5rem;grid-template-columns:1fr;}
-
-/* ====== 版本 1 新增：Facts 通栏，Opinions & Signs of Bias 同排 ====== */
 @media(min-width:600px){
   .results{grid-template-columns:repeat(2,1fr);}
-  .card--fact{grid-column:1/-1;}                     /* Facts 通栏 */
-  .card--opinion,
-  .card--bias{grid-column:span 1;}                  /* 各占 1/2 栏 */
+  .card--fact{grid-column:1/-1;}
+  .card--opinion,.card--bias{grid-column:span 1;}
 }
-
-.card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;}
+.card{border:1px solid var(--border);padding:1.25rem;background:#fafafa;border-radius:var(--radius);transition:transform .2s, box-shadow .2s;}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
 .card h3{margin-bottom:0.75rem;font-size:1.125rem;}
 .card--fact h3{color:var(--primary);}
 .card--opinion h3{color:var(--success);}
 .card--bias h3{color:var(--danger);}
 ul{list-style:none;padding-left:0;}li{margin-bottom:0.5rem;padding-left:1rem;position:relative;}
 li::before{content:"";position:absolute;left:0;top:0.5em;width:5px;height:5px;background:currentColor;border-radius:50%;}
-.footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;}
+.footer{text-align:center;padding:2rem 1rem;font-size:0.875rem;color:#6b7280;display:flex;gap:1rem;justify-content:center;}
 .conf-high{border-left:4px solid #16a34a;background:#f0fdf4}.conf-mid{border-left:4px solid #f59e0b;background:#fffbeb}.conf-low{border-left:4px solid #dc2626;background:#fef2f2}
 li.conf-high::before,li.conf-mid::before,li.conf-low::before{display:none}
 .hidden{display:none!important;}
-
-/* 同高网格：对话框与按钮等高 */
-.input-area.same-height{
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: stretch;      /* 让两行高度一致 */
-  gap: 0.75rem;
-}
-.input-area.same-height .input--capsule{
-  resize: none;             /* 禁止手动拖拽，保持外观一致 */
-  min-height: 0;            /* 让 grid 接管高度 */
-}
