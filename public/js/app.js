@@ -1,4 +1,4 @@
-/* public/js/app.js  (ESM 版) */
+/* public/js/app.js  (ESM) */
 const $ = s => document.querySelector(s);
 const url = '/api/chat';
 
@@ -18,32 +18,16 @@ const ui = {
   bias    : $('#biasList'),
   pub     : $('#pubAdvice'),
   pr      : $('#prAdvice'),
-  radarEl : $('#radar')
+  radarEl : $('#radar'),
+  radarTgl: $('#radarToggle')
 };
 
-/* 原生自动增高 */
+/* 自动增高 */
 const tx = ui.input;
 tx.addEventListener('input', () => {
   tx.style.height = 'auto';
   tx.style.height = tx.scrollHeight + 'px';
 });
-
-/* 判断 YouTube 链接 */
-function isYoutubeUrl(str) {
-  return /(youtube\.com|youtu\.be)/i.test(str);
-}
-
-/* 拉 YouTube 字幕 */
-async function fetchYoutubeText(url) {
-  const res = await fetch('/api/fetch-text', {
-    method : 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body   : JSON.stringify({ url })
-  });
-  if (!res.ok) throw new Error('subtitle fetch failed');
-  const { text } = await res.json();
-  return text;
-}
 
 /* 工具函数 */
 function smoothNeutrality(n){
@@ -80,9 +64,8 @@ function showSummary(txt){
   ui.summary.classList.remove('hidden');
 }
 
-/* 进度条优化 */
+/* 进度条 */
 let pctTick = null;
-
 function showProgress(){
   if (pctTick) clearInterval(pctTick);
   ui.progress.classList.remove('hidden');
@@ -101,13 +84,13 @@ function showProgress(){
     $('#progressInner').style.width = Math.min(pct, 100) + '%';
   }, 120);
 }
-
 function hideProgress(){
   clearInterval(pctTick);
   pctTick = null;
   ui.progress.classList.add('hidden');
 }
 
+/* 四维度条形图 */
 function drawBars({ transparency, factDensity, emotion, consistency }){
   const max = 10;
   document.getElementById('tsVal').textContent = transparency.toFixed(1);
@@ -119,6 +102,22 @@ function drawBars({ transparency, factDensity, emotion, consistency }){
   document.getElementById('ebBar').style.width = `${(emotion / max) * 100}%`;
   document.getElementById('csBar').style.width = `${(consistency / max) * 100}%`;
 }
+
+/* 雷达图展开/收起 */
+ui.radarTgl.addEventListener('click', () => {
+  const isHidden = ui.radarEl.classList.contains('hidden');
+  ui.radarEl.classList.toggle('hidden', !isHidden);
+  ui.radarTgl.textContent = isHidden ? 'Hide Radar Chart' : 'View Radar Chart';
+  if (isHidden && !radarChart) { /* 首次展开才绘制 */
+    const data = [
+      +document.getElementById('tsVal').textContent,
+      +document.getElementById('fdVal').textContent,
+      +document.getElementById('ebVal').textContent,
+      +document.getElementById('csVal').textContent
+    ];
+    drawRadar(data);
+  }
+});
 
 function drawRadar(data){
   if (typeof window.Chart === 'undefined'){ console.warn('Chart.js not loaded'); return; }
@@ -144,22 +143,10 @@ async function handleAnalyze(){
   const raw = ui.input.value.trim();
   if (!raw){ hideProgress(); return; }
 
-  // YouTube 字幕自动获取
-  if (isYoutubeUrl(raw)) {
-    try {
-      const text = await fetchYoutubeText(raw);
-      ui.input.value = text;
-    } catch (e) {
-      showSummary('No subtitle found, please paste text directly.');
-      await new Promise(r => setTimeout(r, COOL_DOWN));
-      return;
-    }
-  }
-
   isAnalyzing = true;
   showProgress();
   try {
-    const { content, title } = await fetchContent(ui.input.value);
+    const { content, title } = await fetchContent(raw);
     const report = await analyzeContent(content, title);
     render(report);
   } catch (e) {
@@ -178,7 +165,7 @@ async function handleAnalyze(){
 async function fetchContent(raw){
   if (!raw.startsWith('http')) return { content: raw.slice(0,2000), title: 'Pasted text' };
   const controller = new AbortController();
-  const timer = setTimeout(()=>controller.abort(), 10000); // 放宽到 10s
+  const timer = setTimeout(()=>controller.abort(), 10000);
   try{
     const res = await fetch(`https://r.jina.ai/${encodeURIComponent(raw)}`, { signal: controller.signal });
     clearTimeout(timer);
@@ -187,7 +174,7 @@ async function fetchContent(raw){
     return { content: txt.slice(0, 2000), title: raw };
   }catch(e){
     clearTimeout(timer);
-    throw e; // 让上层 catch 提示用户
+    throw e;
   }
 }
 
@@ -298,7 +285,8 @@ function render(r){
   const eb = smoothNeutrality(ebRaw);
   const cs = Math.min(10, 0.5 + (ts + fd + eb) / 3);
   drawBars({ transparency: ts, factDensity: fd, emotion: eb, consistency: cs });
-  drawRadar([ts, fd, eb, cs]);
+  // 雷达图数据先存起来，等用户首次点击再画
+  ui.radarEl.dataset.ready = 'true';
   listConf(ui.fact,    r.facts);
   listConf(ui.opinion, r.opinions);
   bias(ui.bias,    r.bias);
