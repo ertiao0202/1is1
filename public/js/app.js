@@ -294,6 +294,8 @@ function render(r){
   ui.pr.textContent  = r.pr;
   ui.fourDim.classList.remove('hidden');
   ui.results.classList.remove('hidden');
+  // ===== 显示小字典（零后端） =====
+  document.getElementById('glossaryCard').classList.remove('hidden');
 }
 
 /* 事件绑定 */
