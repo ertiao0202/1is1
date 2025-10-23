@@ -1,3 +1,4 @@
+console.log('=== app.js 第1行 ===');
 /* public/js/app.js  (ESM) */
 const $ = s => document.querySelector(s);
 const url = '/api/chat';
