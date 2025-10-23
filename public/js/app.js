@@ -1,5 +1,6 @@
-console.log('=== app.js 第1行 ===');
 /* public/js/app.js  (ESM) */
+console.log('=== app.js 第1行 ===');
+
 const $ = s => document.querySelector(s);
 const url = '/api/chat';
 
@@ -7,28 +8,16 @@ let radarChart;
 let isAnalyzing = false;
 const COOL_DOWN = 1200;
 
-const ui = {
-  input   : $('#urlInput'),
-  btn     : $('#analyzeBtn'),
-  progress: $('#progress'),
-  summary : $('#summary'),
-  fourDim : $('#fourDim'),
-  results : $('#results'),
-  fact    : $('#factList'),
-  opinion : $('#opinionList'),
-  bias    : $('#biasList'),
-  pub     : $('#pubAdvice'),
-  pr      : $('#prAdvice'),
-  radarEl : $('#radar'),
-  radarTgl: $('#radarToggle')
-};
+// 1. 先留空引用，等 DOM  Ready 再赋值
+let ui = {};
 
 /* 自动增高 */
-const tx = ui.input;
-tx.addEventListener('input', () => {
-  tx.style.height = 'auto';
-  tx.style.height = tx.scrollHeight + 'px';
-});
+function autoHeight(tx){
+  tx.addEventListener('input', () => {
+    tx.style.height = 'auto';
+    tx.style.height = tx.scrollHeight + 'px';
+  });
+}
 
 /* 工具函数 */
 function smoothNeutrality(n){
@@ -105,20 +94,22 @@ function drawBars({ transparency, factDensity, emotion, consistency }){
 }
 
 /* 雷达图展开/收起 */
-ui.radarTgl.addEventListener('click', () => {
-  const isHidden = ui.radarEl.classList.contains('hidden');
-  ui.radarEl.classList.toggle('hidden', !isHidden);
-  ui.radarTgl.textContent = isHidden ? 'Hide Radar Chart' : 'View Radar Chart';
-  if (isHidden && !radarChart) { /* 首次展开才绘制 */
-    const data = [
-      +document.getElementById('tsVal').textContent,
-      +document.getElementById('fdVal').textContent,
-      +document.getElementById('ebVal').textContent,
-      +document.getElementById('csVal').textContent
-    ];
-    drawRadar(data);
-  }
-});
+function initRadarToggle(){
+  ui.radarTgl.addEventListener('click', () => {
+    const isHidden = ui.radarEl.classList.contains('hidden');
+    ui.radarEl.classList.toggle('hidden', !isHidden);
+    ui.radarTgl.textContent = isHidden ? 'Hide Radar Chart' : 'View Radar Chart';
+    if (isHidden && !radarChart) {
+      const data = [
+        +document.getElementById('tsVal').textContent,
+        +document.getElementById('fdVal').textContent,
+        +document.getElementById('ebVal').textContent,
+        +document.getElementById('csVal').textContent
+      ];
+      drawRadar(data);
+    }
+  });
+}
 
 function drawRadar(data){
   if (typeof window.Chart === 'undefined'){ console.warn('Chart.js not loaded'); return; }
@@ -141,6 +132,7 @@ function drawRadar(data){
 
 /* 主流程 */
 async function handleAnalyze(){
+  console.log('handleAnalyze 被调用');
   const raw = ui.input.value.trim();
   if (!raw){ hideProgress(); return; }
 
@@ -286,7 +278,6 @@ function render(r){
   const eb = smoothNeutrality(ebRaw);
   const cs = Math.min(10, 0.5 + (ts + fd + eb) / 3);
   drawBars({ transparency: ts, factDensity: fd, emotion: eb, consistency: cs });
-  // 雷达图数据先存起来，等用户首次点击再画
   ui.radarEl.dataset.ready = 'true';
   listConf(ui.fact,    r.facts);
   listConf(ui.opinion, r.opinions);
@@ -295,12 +286,31 @@ function render(r){
   ui.pr.textContent  = r.pr;
   ui.fourDim.classList.remove('hidden');
   ui.results.classList.remove('hidden');
-  // ===== 显示小字典（零后端） =====
   document.getElementById('glossaryCard').classList.remove('hidden');
 }
 
-/* 事件绑定 */
+/* ==========  关键修复：DOM  Ready 后再初始化  ========== */
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. 填充 ui 对象
+  ui = {
+    input   : $('#urlInput'),
+    btn     : $('#analyzeBtn'),
+    progress: $('#progress'),
+    summary : $('#summary'),
+    fourDim : $('#fourDim'),
+    results : $('#results'),
+    fact    : $('#factList'),
+    opinion : $('#opinionList'),
+    bias    : $('#biasList'),
+    pub     : $('#pubAdvice'),
+    pr      : $('#prAdvice'),
+    radarEl : $('#radar'),
+    radarTgl: $('#radarToggle')
+  };
+
+  // 2. 绑定事件
+  autoHeight(ui.input);
+  initRadarToggle();
   ui.btn.addEventListener('click', handleAnalyze);
   ui.input.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -308,4 +318,6 @@ document.addEventListener('DOMContentLoaded', () => {
       handleAnalyze();
     }
   });
+
+  console.log('DOM 就绪，事件已绑定');
 });
