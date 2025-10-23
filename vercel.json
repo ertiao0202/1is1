@@ -4,6 +4,8 @@
     { "src": "/api/chat", "dest": "/api/chat.js" },
     { "src": "/api/fetch-text", "dest": "/api/fetch-text.js" },
     { "src": "/privacy", "dest": "/public/privacy.html" },
+    { "src": "/js/app.js", "dest": "/public/js/app.js" },
+    { "src": "/css/(.*)", "dest": "/public/css/$1" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
